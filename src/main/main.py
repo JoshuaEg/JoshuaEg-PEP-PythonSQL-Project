@@ -59,7 +59,7 @@ def load_and_clean_users(file_path):
         line = f.readline()
         while(line):
             dat = line.split(',')
-            if len(dat > 2) or not (dat[0] and dat[1]):
+            if len(dat) > 2 or not (dat[0] and dat[1]):
                 line = f.readline()
                 continue
             cursor.execute(f"""
