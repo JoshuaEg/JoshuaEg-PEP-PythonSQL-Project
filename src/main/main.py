@@ -88,7 +88,7 @@ def load_and_clean_call_logs(file_path):
             dat = l.split(',')
             dat[-1] = dat[-1].removesuffix('\n')
             if len(dat) != 5: continue
-            if exist(dat, lambda x: x.isspace()): continue
+            if exist(dat, lambda x: (not x) or x.isspace() ): continue
             if not forall([dat[1],dat[2],dat[4]], lambda x: x.isnumeric()): continue
             if not (dat[3] == 'inbound' or 'outbound'): continue
             cursor.execute(f"""
