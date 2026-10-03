@@ -108,8 +108,8 @@ def write_user_analytics(csv_file_path):
     dat = cursor.fetchall()
     with open(csv_file_path, 'a') as f:
         writer = csv.writer(f)
-        writer.writerows(data)
-    print(dat)
+        writer.writerows(dat)
+    # print(dat)
 
 
 # This function will write the callLogs ordered by userId, then start time.
