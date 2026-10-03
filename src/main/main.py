@@ -82,7 +82,7 @@ def load_and_clean_call_logs(file_path):
         lines = f.readlines()
         for l in lines:
             dat = l.split(',')
-            dat[-1]
+            dat[-1] = dat[-1].removesuffix('\n')
             if len(dat) != 5 or not forall(dat, lambda x: x.isalpha()): continue
             cursor.execute(f"""
                 INSERT INTO callId(phoneNumber, startTime, endTime, direction, userId) VALUES
