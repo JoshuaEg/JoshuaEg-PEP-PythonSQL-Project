@@ -106,9 +106,9 @@ def write_user_analytics(csv_file_path):
         FROM callLogs GROUP BY userId
         """)
     dat = cursor.fetchall()
-    """ with open(csv_file_path, 'a') as f:
+    with open(csv_file_path, 'a') as f:
         writer = csv.writer(f)
-        writer.writerows(data)"""
+        writer.writerows(data)
     print(dat)
 
 
