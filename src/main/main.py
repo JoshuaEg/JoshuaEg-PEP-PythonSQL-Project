@@ -1,5 +1,6 @@
 import csv
 import os
+import functools
 import sqlite3
 
 # Resolve the resources folder relative to this file, so paths work
@@ -50,16 +51,19 @@ def main():
 
 # TODO: Implement the following 4 functions. The functions must pass the unit tests to complete the project.
 
-
+def forall(list: List[T], predicate):
+    for a in list:
+        if not predicate(a): return False
+    return True
 # This function will load the users.csv file into the users table, discarding any records with incomplete data
 def load_and_clean_users(file_path):
-    print("TODO: load_users")
-    cursor.execute("DELETE FROM USERS")
+    cursor.execute("DELETE FROM users")
     with open(file_path, 'r') as f:
+        f.readline()
         line = f.readline()
         while(line):
             dat = line.split(',')
-            if len(dat) > 2 or not (dat[0] and dat[1]):
+            if len(dat) != 2 or not (dat[0].isalpha() and dat[1].isalpha()):
                 line = f.readline()
                 continue
             cursor.execute(f"""
@@ -71,8 +75,17 @@ def load_and_clean_users(file_path):
 
 # This function will load the callLogs.csv file into the callLogs table, discarding any records with incomplete data
 def load_and_clean_call_logs(file_path):
-
-    print("TODO: load_call_logs")
+    cursor.execute("DELETE FROM callId")
+    with open(file_path, 'r') as f:
+        f.readline()
+        lines = f.readlines()
+        for l in lines:
+            dat = l.split(',')
+            if len(dat) != 5 or not forall(dat, lambda x: x.isalpha()): continue
+            cursor.execute(f"""
+                INSERT INTO callId(phoneNumber, startTime, endTime, direction, userId) VALUES
+                ('{dat[0]}',{dat[1]}, {dat[2]}, '{dat[3]}', {dat[4]})
+            """)
 
 
 # This function will write analytics data to testUserAnalytics.csv - average call time, and number of calls per user.
