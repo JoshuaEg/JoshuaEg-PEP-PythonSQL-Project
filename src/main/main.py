@@ -63,7 +63,7 @@ def load_and_clean_users(file_path):
         line = f.readline()
         while(line):
             dat = line.split(',')
-            dat[-1] = dat[-1].removesuffix(b'\n')
+            dat[-1] = dat[-1].removesuffix('\n')
             if len(dat) != 2 or not (dat[0].isalpha() and dat[1].isalpha()):
                 line = f.readline()
                 continue
