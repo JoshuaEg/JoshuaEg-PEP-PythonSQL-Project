@@ -55,6 +55,10 @@ def forall(lis: list, predicate):
     for a in lis:
         if not predicate(a): return False
     return True
+def exist(lis: list, predicate):
+    for a in lis:
+        if predicate(a): return True
+    return False
 # This function will load the users.csv file into the users table, discarding any records with incomplete data
 def load_and_clean_users(file_path):
     cursor.execute("DELETE FROM users")
@@ -83,7 +87,10 @@ def load_and_clean_call_logs(file_path):
         for l in lines:
             dat = l.split(',')
             dat[-1] = dat[-1].removesuffix('\n')
-            if len(dat) != 5 or not forall(dat, lambda x: x.isalpha()): continue
+            if len(dat) != 5: continue
+            if exist(dat, lambda x: x.isspace()): continue
+            if not forall([dat[1],dat[2],dat[4]], lambda x: x.isnumeric()): continue
+            if not (dat[3] == 'inbound' or 'outbound'): continue
             cursor.execute(f"""
                 INSERT INTO callLogs(phoneNumber, startTime, endTime, direction, userId) VALUES
                 ('{dat[0]}',{dat[1]}, {dat[2]}, '{dat[3]}', {dat[4]})
