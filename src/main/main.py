@@ -63,6 +63,7 @@ def load_and_clean_users(file_path):
         line = f.readline()
         while(line):
             dat = line.split(',')
+            dat[-1].pop()
             if len(dat) != 2 or not (dat[0].isalpha() and dat[1].isalpha()):
                 line = f.readline()
                 continue
@@ -81,6 +82,7 @@ def load_and_clean_call_logs(file_path):
         lines = f.readlines()
         for l in lines:
             dat = l.split(',')
+            dat[-1].pop()
             if len(dat) != 5 or not forall(dat, lambda x: x.isalpha()): continue
             cursor.execute(f"""
                 INSERT INTO callId(phoneNumber, startTime, endTime, direction, userId) VALUES
