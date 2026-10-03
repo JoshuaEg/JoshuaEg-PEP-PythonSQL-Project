@@ -106,9 +106,12 @@ def write_user_analytics(csv_file_path):
         FROM callLogs GROUP BY userId
         """)
     dat = cursor.fetchall()
-    with open(csv_file_path, 'a') as f:
-        writer = csv.writer(f)
-        writer.writerows(dat)
+    with open(csv_file_path, 'r') as f:
+        header = next(csv.reader(f))
+        with open(csv_file_path, 'w') as f:
+            writer = csv.writer(f)
+            writer.writerow(header)
+            writer.writerows(dat)
     # print(dat)
 
 
@@ -121,9 +124,12 @@ def write_ordered_calls(csv_file_path):
         FROM calllogs ORDER BY userId, startTime
         """)
     dat = cursor.fetchall()
-    with open(csv_file_path, 'a') as f:
-        writer = csv.writer(f)
-        writer.writerows(dat)
+    with open(csv_file_path, 'r') as f:
+        header = next(csv.reader(f))
+        with open(csv_file_path, 'w') as f:
+            writer = csv.writer(f)
+            writer.writerow(header)
+            writer.writerows(dat)
 
 
 # No need to touch the functions below!------------------------------------------
