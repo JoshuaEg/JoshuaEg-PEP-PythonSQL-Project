@@ -51,8 +51,8 @@ def main():
 
 # TODO: Implement the following 4 functions. The functions must pass the unit tests to complete the project.
 
-def forall(list: List[T], predicate):
-    for a in list:
+def forall(lis: list, predicate):
+    for a in lis:
         if not predicate(a): return False
     return True
 # This function will load the users.csv file into the users table, discarding any records with incomplete data
